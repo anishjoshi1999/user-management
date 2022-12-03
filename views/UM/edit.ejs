@@ -1,0 +1,88 @@
+<%layout('layouts/boilerplate')%>
+    <div class="row">
+        <h1 class="text-center">Edit User Info</h1>
+        <div class="col-6 offset-3">
+            <form action="/users/<%=user._id%>?_method=PATCH" method="POST">
+                <div class="form-group mb-3">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" aria-describedby="NameHelp"
+                        placeholder="Enter First Name" name="firstName" value="<%=user.firstName%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" aria-describedby="NameHelp"
+                        placeholder="Enter Last Name" name="lastName" value="<%=user.lastName%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="gender">Gender</label>
+                    <input type="text" class="form-control" id="gender" aria-describedby="GenderHelp"
+                        placeholder="Enter Gender" name="gender" value="<%=user.gender%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control" id="age" aria-describedby="ageHelp"
+                        placeholder="Enter age" min="0" step="1" name="age" value="<%=user.age%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        placeholder="Enter email" name="email" value="<%=user.email%>">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="address">Address</label>
+                    <input name="address" type="text" class="form-control" id="address"
+                        aria-describedby="addressHelp" placeholder="Enter Address" value="<%=user.address%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="phone">Phone</label>
+                    <input name="phone" type="text" class="form-control" id="phone" aria-describedby="phoneHelp"
+                        placeholder="Enter age" value="<%=user.phone%>">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="birthdate">Birth date</label>
+                    <input name="birthDate" type="text" class="form-control" id="birthdate"
+                        aria-describedby="birthdateHelp" placeholder="Enter age" value="<%=user.birthDate%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="image">Image</label>
+                    <input name="image" type="text" class="form-control" id="image"
+                        aria-describedby="birthdateHelp" placeholder="Enter age" value="<%=user.image%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="bloodGroup">Blood Group</label>
+                    <input name="bloodGroup" type="text" class="form-control" id="bloodGroup"
+                        aria-describedby="birthdateHelp" placeholder="Enter age" value="<%=user.bloodGroup%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="eyeColor">Eye Color</label>
+                    <input name="eyeColor" type="text" class="form-control" id="eyeColor"
+                        aria-describedby="birthdateHelp" placeholder="Enter age" value="<%=user.eyeColor%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="height">Height</label>
+                    <input name="height" type="number" class="form-control" id="height"
+                        aria-describedby="birthdateHelp" placeholder="Enter age" value="<%=user.height%>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="weight">Weight</label>
+                    <input name="weight" type="number" class="form-control" id="weight"
+                        aria-describedby="birthdateHelp" placeholder="Enter age" value="<%=user.weight%>">
+                </div>
+
+                <div class="form-check mb-3">
+                    <input required type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">I agree to the terms and conditions.</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Edit</button>
+            </form>
+
+        </div>
+    </div>
+
+
+    <div>
+        <a href="/" class="btn btn-info">Back</a>
+    </div>

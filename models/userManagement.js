@@ -4,10 +4,19 @@ const Schema = mongoose.Schema
 const userManagementSchema = new Schema({
     firstName:String,
     lastName:String,
-    gender:Number,
+    gender:String,
     age:Number,
     email:String,
-    address:String
+    address:String,
+    // new schema
+    phone:String,
+    birthDate:String,
+    image:String,
+    bloodGroup:String,
+    eyeColor:String,
+    height:Number,
+    weight:Number
+
 })
 
 module.exports = mongoose.model('userManagement',userManagementSchema)

@@ -24,15 +24,22 @@ const seeds = async () => {
 
 (async () => {
     try {
+        /*  phone:String,
+    birthDate:String,
+    image:String,
+    bloodGroup:String,
+    eyeColor:String,
+    height:Number,
+    weight:Number*/
         const res = await superagent.get('https://dummyjson.com/users');
         const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
         console.log('Status Code:', res.statusCode);
         console.log('Date in Response header:', headerDate);
         const users = (JSON.parse(res.text)).users
         users.forEach((user) => {
-            const { firstName, lastName, email, age, address } = user
-            const location = address.address
-            userInfo.push({ firstName, lastName, email, age, location })
+            const { firstName, lastName, email, age,gender,phone,birthDate,image,bloodGroup,eyeColor,height,weight } = user
+            const {address} = user.address
+            userInfo.push({ firstName, lastName, email, age, address ,gender,phone,birthDate,image,bloodGroup,eyeColor,height,weight})
         })
         seeds()
     } catch (err) {
