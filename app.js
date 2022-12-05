@@ -1,75 +1,30 @@
 const express = require('express')
 const app = express()
-const path = require('path')
-const ejsMate = require('ejs-mate')
-const mongoose = require('mongoose')
-var bodyParser = require('body-parser')
-const methodOverride = require('method-override')
-const userManagement = require('./models/userManagement')
-mongoose.connect('mongodb://localhost:27017/user-management')
-    .then(() => {
-        console.log("connection open")
-    })
-    .catch((err) => {
-        console.log("error found")
-        console.log(err)
-    })
-app.engine('ejs', ejsMate)
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-// override with POST having ?_method=DELETE
-app.use(methodOverride('_method'))
+const { ROLE, users } = require('./data')
+const projectRouter = require('./routes/projects')
+const { authUser, authRole } = require('./basicAuth')
+app.use(express.json())
+app.use(setUser)
+app.use('/projects', projectRouter)
 
+app.get('/', authUser, (req, res) => {
+    res.send('Home Page')
+})
 
-// Routes
-// Displaying all the user name
-app.get("/", (req, res) => {
-    res.render('home')
+app.get('/dashboard', authUser, (req, res) => {
+    res.send('Dashboard Page')
 })
-// To show all the users inside the database
-app.get('/users', async (req, res) => {
-    const users = await userManagement.find({})
-    res.render('UM/index', { users })
+
+app.get('/admin', authUser, authRole(ROLE.BASIC), (req, res) => {
+    res.send('Admin Page')
 })
-// To create a new user info
-app.get('/users/new', async (req, res) => {
-    res.render('UM/new')
-})
-// To see the info of a specfic user
-app.post('/users', async (req, res) => {
-    const newUser = new userManagement(req.body)
-    await newUser.save(() => {
-        console.log("new user added successfully")
-    })
-    res.redirect('/users')
-})
-// To show a specific user
-app.get('/users/:id', async (req, res) => {
-    const { id } = req.params
-    // Find user by id
-    const user = await userManagement.findById(id)
-    res.render('UM/show',{user})
-})
-// To show a edit form for a specific user
-app.get('/users/:id/edit', async(req,res)=> {
-    const {id} = req.params
-     // Find user by id
-     const user = await userManagement.findById(id)
-    res.render('UM/edit',{user})
-})
-app.patch('/users/:id',async(req,res)=> {
-    const {id} = req.params
-    await userManagement.findByIdAndUpdate(id,req.body)
-    res.redirect(`/users/${id}`)
-})
-// To delete a specific user
-app.delete('/users/:id',async(req,res)=> {
-    const { id } = req.params;
-    await userManagement.findByIdAndDelete(id)
-    res.redirect('/users')
-})
-app.listen(3000, () => {
-    console.log("Serving on port 3000")
-})
+
+function setUser(req, res, next) {
+    const userId = req.body.userId
+    if (userId) {
+        req.user = users.find(user => user.id === userId)
+    }
+    next()
+}
+
+app.listen(3000)
