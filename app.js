@@ -2,11 +2,13 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const ejsMate = require('ejs-mate')
+const dotenv = require("dotenv").config()
 const mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const userManagement = require('./models/userManagement')
-mongoose.connect('mongodb://localhost:27017/user-management')
+const conn_str = `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@anish.wracvu5.mongodb.net/?retryWrites=true&w=majority`
+mongoose.connect(conn_str)
     .then(() => {
         console.log("connection open")
     })
@@ -50,22 +52,22 @@ app.get('/users/:id', async (req, res) => {
     const { id } = req.params
     // Find user by id
     const user = await userManagement.findById(id)
-    res.render('UM/show',{user})
+    res.render('UM/show', { user })
 })
 // To show a edit form for a specific user
-app.get('/users/:id/edit', async(req,res)=> {
-    const {id} = req.params
-     // Find user by id
-     const user = await userManagement.findById(id)
-    res.render('UM/edit',{user})
+app.get('/users/:id/edit', async (req, res) => {
+    const { id } = req.params
+    // Find user by id
+    const user = await userManagement.findById(id)
+    res.render('UM/edit', { user })
 })
-app.patch('/users/:id',async(req,res)=> {
-    const {id} = req.params
-    await userManagement.findByIdAndUpdate(id,req.body)
+app.patch('/users/:id', async (req, res) => {
+    const { id } = req.params
+    await userManagement.findByIdAndUpdate(id, req.body)
     res.redirect(`/users/${id}`)
 })
 // To delete a specific user
-app.delete('/users/:id',async(req,res)=> {
+app.delete('/users/:id', async (req, res) => {
     const { id } = req.params;
     await userManagement.findByIdAndDelete(id)
     res.redirect('/users')

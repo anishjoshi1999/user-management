@@ -2,8 +2,10 @@
 const mongoose = require('mongoose')
 const userManagement = require('./models/userManagement')
 const superagent = require('superagent');
+const dotenv = require("dotenv").config()
 const userInfo = []
-mongoose.connect('mongodb://localhost:27017/user-management')
+const conn_str = `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@anish.wracvu5.mongodb.net/?retryWrites=true&w=majority`
+mongoose.connect(conn_str)
     .then(() => {
         console.log("connection open")
     })
@@ -13,6 +15,7 @@ mongoose.connect('mongodb://localhost:27017/user-management')
     })
 const seeds = async () => {
     await userManagement.deleteMany({})
+    console.log("All previous data deleted successfully")
     await userManagement.insertMany(userInfo)
         .then((res) => {
             console.log(res)
@@ -20,6 +23,7 @@ const seeds = async () => {
         .catch((e) => {
             console.log(e)
         })
+    console.log("New data Added successfully")
 }
 
 (async () => {
@@ -37,9 +41,9 @@ const seeds = async () => {
         console.log('Date in Response header:', headerDate);
         const users = (JSON.parse(res.text)).users
         users.forEach((user) => {
-            const { firstName, lastName, email, age,gender,phone,birthDate,image,bloodGroup,eyeColor,height,weight } = user
-            const {address} = user.address
-            userInfo.push({ firstName, lastName, email, age, address ,gender,phone,birthDate,image,bloodGroup,eyeColor,height,weight})
+            const { firstName, lastName, email, age, gender, phone, birthDate, image, bloodGroup, eyeColor, height, weight } = user
+            const { address } = user.address
+            userInfo.push({ firstName, lastName, email, age, address, gender, phone, birthDate, image, bloodGroup, eyeColor, height, weight })
         })
         seeds()
     } catch (err) {
