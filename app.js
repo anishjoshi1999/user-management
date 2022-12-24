@@ -5,6 +5,7 @@ const ejsMate = require('ejs-mate')
 const dotenv = require("dotenv").config()
 const mongoose = require('mongoose')
 var bodyParser = require('body-parser')
+const paginatedResults = require('./middleware/pagination')
 const methodOverride = require('method-override')
 const userManagement = require('./models/userManagement')
 const conn_str = `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@anish.wracvu5.mongodb.net/?retryWrites=true&w=majority`
@@ -24,16 +25,22 @@ app.use(bodyParser.json())
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
 
-
 // Routes
 // Displaying all the user name
 app.get("/", (req, res) => {
     res.render('home')
 })
 // To show all the users inside the database
-app.get('/users', async (req, res) => {
-    const users = await userManagement.find({})
-    res.render('UM/index', { users })
+app.get('/users',paginatedResults(userManagement),async (req, res) => {
+    const {next,previous,users,count} = res.paginatedResults
+    let totalPages;
+    if(!Number.isInteger(count/10)){
+        totalPages = Math.floor(count/10) + 1
+    }else {
+        totalPages = Math.floor(count/10) 
+    }
+    console.log(totalPages)
+    res.render('UM/index', { users ,previous,next,totalPages})
 })
 // To create a new user info
 app.get('/users/new', async (req, res) => {

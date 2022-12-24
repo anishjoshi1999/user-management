@@ -34,3 +34,28 @@
                 <% }) %>
             </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <%if(previous) {%>
+              <li class="page-item">
+                <a class="page-link" href="/users?page=<%=previous.page%>&limit=10" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#"><%=totalPages - previous.page - 1%> Pages Remaining </a></li>
+              
+            <%}else {%>
+                <li class="page-item"><a class="page-link" href="#"><%=totalPages - 1%> Pages Remaining </a></li>
+            <%}%>
+
+              <%if(next){%>
+              <li class="page-item">
+                <a class="page-link" href="http://localhost:3000/users?page=<%=next.page%>&limit=10" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            <%}%>
+            </ul>
+          </nav>
