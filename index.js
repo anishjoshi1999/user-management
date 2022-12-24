@@ -9,8 +9,8 @@ var bodyParser = require('body-parser')
 const paginatedResults = require('./middleware/pagination')
 const methodOverride = require('method-override')
 const userManagement = require('./models/userManagement')
-const conn_str = `mongodb+srv://anishjoshi2056:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.mfsduzy.mongodb.net/?retryWrites=true&w=majority`
-mongoose.connect(conn_str)
+const MONGODB_URI = `mongodb+srv://anishjoshi2056:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.mfsduzy.mongodb.net/?retryWrites=true&w=majority`
+mongoose.connect(MONGODB_URI)
     .then(() => {
         console.log("connection open")
     })

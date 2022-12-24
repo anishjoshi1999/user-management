@@ -11,5 +11,9 @@
             "src": "/(.*)",
             "dest": "/"
         }
-    ]
+    ],
+    "env": {
+        "MONGODB_URI": "mongodb+srv://anishjoshi2056:Eii6OMW49Xqdktfg@cluster0.mfsduzy.mongodb.net/?retryWrites=true&w=majority",
+        "NODE_ENV": "production"
+      }
 }
