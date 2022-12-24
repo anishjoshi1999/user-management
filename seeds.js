@@ -4,7 +4,7 @@ const userManagement = require('./models/userManagement')
 const superagent = require('superagent');
 const dotenv = require("dotenv").config()
 const userInfo = []
-const conn_str = `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@anish.wracvu5.mongodb.net/?retryWrites=true&w=majority`
+const conn_str = `mongodb+srv://anishjoshi2056:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.mfsduzy.mongodb.net/?retryWrites=true&w=majority`
 mongoose.connect(conn_str)
     .then(() => {
         console.log("connection open")

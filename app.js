@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const querystring = require('querystring')
 const ejsMate = require('ejs-mate')
 const dotenv = require("dotenv").config()
 const mongoose = require('mongoose')
@@ -8,7 +9,7 @@ var bodyParser = require('body-parser')
 const paginatedResults = require('./middleware/pagination')
 const methodOverride = require('method-override')
 const userManagement = require('./models/userManagement')
-const conn_str = `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@anish.wracvu5.mongodb.net/?retryWrites=true&w=majority`
+const conn_str = `mongodb+srv://anishjoshi2056:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.mfsduzy.mongodb.net/?retryWrites=true&w=majority`
 mongoose.connect(conn_str)
     .then(() => {
         console.log("connection open")
@@ -28,8 +29,11 @@ app.use(methodOverride('_method'))
 // Routes
 // Displaying all the user name
 app.get("/", (req, res) => {
-    res.render('home')
+    const query = querystring.stringify({ page: '1' });
+    res.redirect(`/users?${query}&limit=10`);
 })
+
+
 // To show all the users inside the database
 app.get('/users',paginatedResults(userManagement),async (req, res) => {
     const {next,previous,users,count} = res.paginatedResults
@@ -39,7 +43,6 @@ app.get('/users',paginatedResults(userManagement),async (req, res) => {
     }else {
         totalPages = Math.floor(count/10) 
     }
-    console.log(totalPages)
     res.render('UM/index', { users ,previous,next,totalPages})
 })
 // To create a new user info
