@@ -5,16 +5,16 @@
     </div>
 
   
-        <table class="table">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col" class="d-none d-sm-table-cell">ID</th>
                     <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Address</th>
+                    <th scope="col" class="d-none d-md-table-cell">Last Name</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Age</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Gender</th>
+                    <th scope="col" class="d-none d-md-table-cell">Email</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Address</th>
                     <th scope="col">View Profile</th>
 
                 </tr>
@@ -22,14 +22,14 @@
             <tbody>
                 <% users.forEach((user,index)=> {%>
                 <tr>
-                    <th scope="row"><%=(index+1)%></th>
+                    <th scope="row" class="d-none d-sm-table-cell"><%=(index+1)%></th>
                     <td><%=user.firstName%></td>
-                    <td><%=user.lastName%></td>
-                    <td><%=user.age%></td>
-                    <td><%=user.gender%></td>
-                    <td><%=user.email%></td>
-                    <td><%=user.address%></td>
-                    <td ><a href="/users/<%=user._id%>" class="btn btn-info">Click Me</a></td>
+                    <td class="d-none d-md-table-cell"><%=user.lastName%></td>
+                    <td class="d-none d-lg-table-cell"><%=user.age%></td>
+                    <td class="d-none d-lg-table-cell"><%=user.gender%></td>
+                    <td class="d-none d-md-table-cell"><%=user.email%></td>
+                    <td class="d-none d-lg-table-cell"><%=user.address%></td>
+                    <td><a href="/users/<%=user._id%>" class="btn btn-info">Click Me</a></td>
                 </tr>
                 <% }) %>
             </tbody>
