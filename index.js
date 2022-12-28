@@ -9,7 +9,7 @@ var bodyParser = require('body-parser')
 const paginatedResults = require('./middleware/pagination')
 const methodOverride = require('method-override')
 const userManagement = require('./models/userManagement')
-const MONGODB_URI = `mongodb+srv://anishjoshi2056:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.mfsduzy.mongodb.net/?retryWrites=true&w=majority`
+const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.mfsduzy.mongodb.net/?retryWrites=true&w=majority`
 mongoose.connect(MONGODB_URI)
     .then(() => {
         console.log("connection open")
@@ -28,6 +28,9 @@ app.use(methodOverride('_method'))
 
 // Routes
 // Displaying all the user name
+app.get('/roles',(req,res)=> {
+    res.render('home')
+})
 app.get("/", (req, res) => {
     const query = querystring.stringify({ page: '1' });
     res.redirect(`/users?${query}&limit=10`);
