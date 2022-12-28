@@ -17,7 +17,7 @@
               <li class="list-group-item"><span class="fw-bold">Height and Weight:</span> <%=user.height%> and  <%=user.weight%> Kg</li>
             </ul>
             <div class="card-body">
-              <a href="/users" class="card-link btn btn-primary">Back</a>
+              <a href="/" class="card-link btn btn-primary">Back</a>
               <a href="/users/<%=user._id%>/edit" class="card-link btn btn-info">Edit</a>
               <form class="d-inline" action="/users/<%=user._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-danger">Delete</button>
