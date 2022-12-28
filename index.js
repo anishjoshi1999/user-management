@@ -12,7 +12,10 @@ const userManagement = require('./models/userManagement')
 const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.mfsduzy.mongodb.net/?retryWrites=true&w=majority`
 mongoose.connect(MONGODB_URI)
     .then(() => {
-        console.log("connection open")
+        app.listen(3000, () => {
+            console.log("Serving on port 3000")
+        })
+        console.log("connected to Mongodb Atlas")
     })
     .catch((err) => {
         console.log("error found")
@@ -28,7 +31,7 @@ app.use(methodOverride('_method'))
 
 // Routes
 // Displaying all the user name
-app.get('/roles',(req,res)=> {
+app.get('/roles', (req, res) => {
     res.render('home')
 })
 app.get("/", (req, res) => {
@@ -38,15 +41,15 @@ app.get("/", (req, res) => {
 
 
 // To show all the users inside the database
-app.get('/users',paginatedResults(userManagement),async (req, res) => {
-    const {next,previous,users,count} = res.paginatedResults
+app.get('/users', paginatedResults(userManagement), async (req, res) => {
+    const { next, previous, users, count } = res.paginatedResults
     let totalPages;
-    if(!Number.isInteger(count/10)){
-        totalPages = Math.floor(count/10) + 1
-    }else {
-        totalPages = Math.floor(count/10) 
+    if (!Number.isInteger(count / 10)) {
+        totalPages = Math.floor(count / 10) + 1
+    } else {
+        totalPages = Math.floor(count / 10)
     }
-    res.render('UM/index', { users ,previous,next,totalPages})
+    res.render('UM/index', { users, previous, next, totalPages })
 })
 // To create a new user info
 app.get('/users/new', async (req, res) => {
@@ -84,7 +87,4 @@ app.delete('/users/:id', async (req, res) => {
     const { id } = req.params;
     await userManagement.findByIdAndDelete(id)
     res.redirect('/users')
-})
-app.listen(3000, () => {
-    console.log("Serving on port 3000")
 })
